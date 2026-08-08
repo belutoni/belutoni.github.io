@@ -1,0 +1,62 @@
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { ArrowLeft } from 'lucide-react';
+import { getAllPosts, getPostBySlug } from '@/lib/blog';
+
+// Generate static pages at build time
+export function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const post = getPostBySlug(resolvedParams.slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  return (
+    <div className="min-h-screen max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-24 relative">
+      <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] bg-accent-teal/10 rounded-full blur-[120px] pointer-events-none z-[-1]" />
+      
+      <Link href="/blog" className="inline-flex items-center gap-2 text-slate-muted hover:text-accent-teal transition-colors text-sm uppercase tracking-widest mb-12">
+        <ArrowLeft className="w-4 h-4" /> Back to Logs
+      </Link>
+
+      <header className="mb-12 border-b border-slate-border/50 pb-8">
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
+          {post.title}
+        </h1>
+        <div className="flex flex-wrap items-center gap-4 text-slate-muted text-sm">
+          <time>
+            {new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+          <span>•</span>
+          <div className="flex gap-2">
+            {post.tags.map(tag => (
+              <span key={tag} className="text-xs px-2 py-1 bg-slate-border/50 border border-slate-border uppercase">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <article className="prose prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 prose-code:text-accent-teal prose-code:bg-slate-border/30 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#0a101a] prose-pre:border prose-pre:border-slate-border text-slate-300 leading-loose">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {post.content}
+        </ReactMarkdown>
+      </article>
+    </div>
+  );
+}
