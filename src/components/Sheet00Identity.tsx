@@ -2,14 +2,14 @@ import { ArrowUpRight, Mail } from "lucide-react";
 
 export default function Sheet00Identity() {
   return (
-    <section className="mb-4">
+    <section id="contact" className="mb-4">
       <div className="flex justify-between items-end border-b border-slate-border pb-2 mb-6 text-slate-muted text-xs uppercase tracking-widest">
         <span>SHEET 00 / IDENTITY</span>
         <span>44.4268° N · 26.1025° E</span>
       </div>
       
       <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-12">
-        ANTONIE—GABRIEL BELU
+        ANTONIE-GABRIEL BELU
       </h1>
       
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4">
@@ -30,7 +30,7 @@ export default function Sheet00Identity() {
         </div>
         
         <div className="md:col-span-8 text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl">
-          "I design software where architecture becomes tangible—kernels, firmware, boot flows, assemblers, and the tools that make machines understandable."
+          "I design software where architecture becomes tangible-kernels, firmware, boot flows, assemblers, and the tools that make machines understandable."
         </div>
       </div>
     </section>

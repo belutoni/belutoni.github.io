@@ -7,10 +7,10 @@ export default function NavBar() {
         BELUXO / DEV
       </div>
       <div className="flex flex-wrap gap-6 text-slate-muted">
+        <Link href="#contact" className="hover:text-foreground transition-colors">CONTACT</Link>
         <Link href="#work" className="hover:text-foreground transition-colors">WORK</Link>
         <Link href="#experience" className="hover:text-foreground transition-colors">EDUCATION</Link>
         <Link href="#contributions" className="hover:text-foreground transition-colors">CONTRIBUTIONS</Link>
-        <Link href="#contact" className="hover:text-foreground transition-colors">CONTACT</Link>
       </div>
     </nav>
   );

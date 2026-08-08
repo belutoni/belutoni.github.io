@@ -8,7 +8,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Antonie—Gabriel Belu | Systems Programmer",
+  title: "Antonie-Gabriel Belu | Systems Programmer",
   description: "I design software where architecture becomes tangible.",
 };
 
