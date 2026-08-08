@@ -55,7 +55,7 @@ export default function Sheet02Experience() {
             <div className="text-accent-teal text-sm mb-1">{exp.role}</div>
             <div className="text-slate-muted text-xs mb-4 uppercase">{exp.period}</div>
             
-            <ul className="text-sm text-slate-300 mt-auto pt-4 border-t border-slate-border/50 list-none space-y-2">
+            <ul className="text-sm text-slate-300 pt-4 border-t border-slate-border/50 list-none space-y-2">
               {exp.metrics.map((metric, idx) => (
                 <li key={idx} className="flex gap-2">
                   <span className="text-accent-teal">›</span>
