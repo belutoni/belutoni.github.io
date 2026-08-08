@@ -49,7 +49,7 @@ const PreBlock = ({ children, ...props }: any) => {
           {copied ? "COPIED" : "COPY"}
         </button>
       </div>
-      <pre ref={preRef} className="p-4 overflow-x-auto text-sm bg-transparent m-0 border-none" {...props}>
+      <pre ref={preRef} className="p-4 overflow-x-auto text-sm bg-transparent m-0 border-none [&>code]:!bg-transparent [&>code]:!p-0" {...props}>
         {children}
       </pre>
     </div>
