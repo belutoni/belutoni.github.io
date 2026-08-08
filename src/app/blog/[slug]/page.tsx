@@ -21,7 +21,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <div className="min-h-screen max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-24 relative">
+    <div className="min-h-screen w-full max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-24 relative">
       <div className="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] bg-accent-teal/10 rounded-full blur-[120px] pointer-events-none z-[-1]" />
       
       <Link href="/blog" className="inline-flex items-center gap-2 text-slate-muted hover:text-accent-teal transition-colors text-sm uppercase tracking-widest mb-12">
@@ -51,7 +51,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
       </header>
 
-      <article className="prose prose-sm md:prose-base prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 text-slate-300 leading-loose break-words">
+      <article className="prose prose-sm md:prose-base w-full max-w-full overflow-hidden prose-invert prose-slate prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 text-slate-300 leading-loose break-words">
         <MarkdownRenderer content={post.content} />
       </article>
     </div>
