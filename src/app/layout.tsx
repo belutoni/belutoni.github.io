@@ -22,7 +22,7 @@ export default function RootLayout({
       lang="en"
       className={`${jetbrainsMono.variable} h-full antialiased scroll-smooth scroll-pt-32`}
     >
-      <body className="min-h-full flex flex-col font-mono text-sm leading-relaxed selection:bg-accent-teal selection:text-background">
+      <body className="min-h-full flex flex-col font-mono text-sm leading-relaxed selection:bg-accent-teal selection:text-background overflow-x-hidden w-full max-w-full">
         {children}
       </body>
     </html>
