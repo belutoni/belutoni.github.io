@@ -11,6 +11,7 @@ export default function NavBar() {
         <Link href="#work" className="hover:text-foreground transition-colors">WORK</Link>
         <Link href="#experience" className="hover:text-foreground transition-colors">EDUCATION</Link>
         <Link href="#contributions" className="hover:text-foreground transition-colors">CONTRIBUTIONS</Link>
+        <Link href="#skills" className="hover:text-foreground transition-colors">SKILLS</Link>
       </div>
     </nav>
   );

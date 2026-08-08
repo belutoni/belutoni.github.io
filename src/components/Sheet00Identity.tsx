@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, Phone } from "lucide-react";
 
 export default function Sheet00Identity() {
   return (
@@ -26,11 +26,14 @@ export default function Sheet00Identity() {
             <a href="mailto:belutoni06@gmail.com" className="flex items-center gap-2 hover:text-accent-teal transition-colors w-fit">
               <Mail className="w-4 h-4" /> EMAIL <ArrowUpRight className="w-4 h-4 text-slate-muted" />
             </a>
+            <a href="tel:+40770426273" className="flex items-center gap-2 hover:text-accent-teal transition-colors w-fit">
+              <Phone className="w-4 h-4" /> +40 770 426 273
+            </a>
           </div>
         </div>
         
         <div className="md:col-span-8 text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl">
-          "I design software where architecture becomes tangible-kernels, firmware, boot flows, assemblers, and the tools that make machines understandable."
+          First-year Computer Science student passionate about low-level systems programming and computer architecture. Eager to deepen expertise in embedded platforms, ARMv8 architectures, and Linux kernel development.
         </div>
       </div>
     </section>

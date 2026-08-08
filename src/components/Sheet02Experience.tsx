@@ -5,21 +5,33 @@ export default function Sheet02Experience() {
       institution: "University of Bucharest",
       role: "B.Sc. in Computer Science (1st Year, Olympiad Class)",
       period: "2025-Present",
-      metrics: "Admission Exam score: 10/10 | Informatics Baccalaureate: 10/10."
+      metrics: [
+        "Academic performance: Admission Exam score: 10/10. Informatics Baccalaureate grade: 10/10."
+      ]
     },
     {
       id: "02",
       institution: "NXP Semiconductors - Kernel Summer School",
-      role: "Embedded Linux Kernel Intern / Participant",
+      role: "Embedded Linux Kernel Intern",
       period: "Summer 2026",
-      metrics: "Won 1st place in the hackathon. Ranked 1st in 2/3 competitive technical assessments evaluating Linux kernel subsystem internals."
+      metrics: [
+        "Won 1st place at the hackathon by co-developing an interactive retro system monitor on the NXP i.MX93 FRDM.",
+        "Developed custom SPI-based ST7789 display and I2C-based BMP280 sensor drivers, implementing fixed-point calibration inside the kernel.",
+        "Wrote character drivers utilizing copy_to_user and copy_from_user for user-space communication, managing hardware interrupts, GPIOs, and software debouncing.",
+        "Ranked 1st in 2/3 competitive technical assessments evaluating Linux kernel subsystem internals."
+      ]
     },
     {
       id: "03",
       institution: "Politehnica Bucharest - ARM Summer School",
       role: "Systems & Firmware Engineering",
       period: "Summer 2026",
-      metrics: "Built an ARMv8 Firmware Image Package (FIP) with U-Boot, TF-A, and OP-TEE for NXP i.MX93 via SDP. Built custom ARM64 Linux kernels and rootfs using Buildroot & debootstrap."
+      metrics: [
+        "Built an ARMv8 Firmware Image Package (FIP) containing U-Boot (BL33), TF-A (BL31), and OP-TEE (BL32) for the NXP i.MX93, deploying it via the Serial Download Protocol (SDP).",
+        "Compiled a custom ARM64 Linux kernel, built a tailored rootfs using Buildroot, and automated the boot sequence using custom U-Boot environments.",
+        "Generated an ARM64 Debian rootfs using debootstrap and implemented an A/B redundant partitioning scheme for robust OTA updates.",
+        "Created an out-of-tree Buildroot external package (BR2_EXTERNAL) to cross-compile a C application utilizing libgpiod2 for GPIO control."
+      ]
     }
   ];
 
@@ -45,9 +57,14 @@ export default function Sheet02Experience() {
             <div className="text-accent-teal text-sm mb-1">{exp.role}</div>
             <div className="text-slate-muted text-xs mb-4 uppercase">{exp.period}</div>
             
-            <p className="text-sm text-slate-300 mt-auto pt-4 border-t border-slate-border/50">
-              {exp.metrics}
-            </p>
+            <ul className="text-sm text-slate-300 mt-auto pt-4 border-t border-slate-border/50 list-none space-y-2">
+              {exp.metrics.map((metric, idx) => (
+                <li key={idx} className="flex gap-2">
+                  <span className="text-accent-teal">›</span>
+                  <span>{metric}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

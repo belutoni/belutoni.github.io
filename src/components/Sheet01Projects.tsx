@@ -2,27 +2,26 @@ export default function Sheet01Projects() {
   const projects = [
     {
       id: "01",
-      title: "zisc-v",
+      title: "zisc-v - RISC-V Assembler",
       tags: ["ZIG", "DFA", "RISC-V"],
       description: "A high-performance assembler front end with explicit token lifetimes, manual allocation, and multi-base numeric parsing.",
-      details: "Designed and implemented a RISC-V assembly lexer in Zig using a Deterministic Finite Automaton (DFA) state machine. Manages token lifetimes manually via Zig's allocator model.",
+      details: [
+        "Designed and implemented a high-performance RISC-V assembly lexer in Zig using a Deterministic Finite Automaton (DFA) state machine to tokenize raw source code.",
+        "Implemented lexing and parsing logic for registers, string literals, and numeric literals in binary, octal, decimal, and hexadecimal formats.",
+        "Managed token lifetimes manually using Zig's allocator model and std.ArrayList to prevent memory leaks."
+      ],
       link: "https://github.com/belutoni/zisc-v"
     },
     {
       id: "02",
-      title: "Minimal x86 OS",
+      title: "Minimal x86 Operating System",
       tags: ["C++23", "NASM", "QEMU"],
       description: "A custom boot path into protected mode, a monolithic kernel, and a type-safe VGA text system.",
-      details: "Custom bootloader in NASM Assembly initializing GDT and transitioning to 32-bit Protected Mode. Built a type-safe VGA text-mode driver using C++23 concepts.",
+      details: [
+        "Developed a monolithic x86 kernel and a custom bootloader in NASM Assembly to initialize the GDT, enable the A20 line, and transition the CPU to 32-bit Protected Mode.",
+        "Built a type-safe VGA text-mode driver using C++23 concepts to enforce compile-time constraints on stream formatting."
+      ],
       link: "https://github.com/belutoni/minimal-x86-os"
-    },
-    {
-      id: "03",
-      title: "Retro System Monitor",
-      tags: ["NXP i.MX93", "KERNEL"],
-      description: "First-place hackathon system with SPI display, I2C sensor, fixed-point calibration, character devices, and GPIO interrupts.",
-      details: "Custom ST7789 display and BMP280 sensor drivers inside the Linux kernel on NXP i.MX93. Implemented character drivers utilizing copy_to_user/copy_from_user and hardware interrupts.",
-      link: "https://github.com/belutoni/retro-system-monitor"
     }
   ];
 
@@ -61,9 +60,14 @@ export default function Sheet01Projects() {
                 {project.description}
               </p>
               
-              <p className="text-sm text-slate-muted">
-                {project.details}
-              </p>
+              <ul className="text-sm text-slate-muted list-none space-y-2 mt-4 pt-4 border-t border-slate-border/50">
+                {project.details.map((detail, idx) => (
+                  <li key={idx} className="flex gap-2">
+                    <span className="text-accent-teal">›</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
             </a>
           </div>
         ))}
