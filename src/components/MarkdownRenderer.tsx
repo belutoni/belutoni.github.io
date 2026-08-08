@@ -42,7 +42,7 @@ const PreBlock = ({ children, ...props }: any) => {
         <span className="text-xs text-slate-400 lowercase font-medium tracking-wide">{language}</span>
         <button 
           onClick={handleCopy} 
-          className="text-slate-muted hover:text-accent-teal transition-colors flex items-center gap-1.5 text-xs"
+          className="text-slate-muted hover:text-accent-teal transition-colors flex items-center gap-1.5 text-xs cursor-pointer"
           title="Copy code"
         >
           {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
