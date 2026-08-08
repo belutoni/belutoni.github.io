@@ -29,7 +29,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       </Link>
 
       <header className="mb-6 border-b border-slate-border/50 pb-8">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight break-words">
           {post.title}
         </h1>
         <div className="flex flex-wrap items-center gap-4 text-slate-muted text-sm">
@@ -51,7 +51,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
       </header>
 
-      <article className="prose prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 text-slate-300 leading-loose">
+      <article className="prose prose-sm md:prose-base prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 text-slate-300 leading-loose break-words">
         <MarkdownRenderer content={post.content} />
       </article>
     </div>

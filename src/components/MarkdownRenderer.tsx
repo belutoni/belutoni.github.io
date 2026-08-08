@@ -37,7 +37,7 @@ const PreBlock = ({ children, ...props }: any) => {
   };
 
   return (
-    <div className="relative group rounded border border-slate-border bg-[#0a101a] my-6 overflow-hidden">
+    <div className="relative group rounded border border-slate-border bg-[#0a101a] my-6 overflow-hidden w-full max-w-full">
       <div className="flex justify-between items-center px-4 py-2 border-b border-slate-border/50 bg-[#0d141f]">
         <span className="text-xs text-slate-400 lowercase font-medium tracking-wide">{language}</span>
         <button 
