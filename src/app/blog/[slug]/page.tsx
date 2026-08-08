@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/atom-one-dark.css';
 import { ArrowLeft } from 'lucide-react';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 
@@ -52,8 +54,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
       </header>
 
-      <article className="prose prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 prose-code:text-accent-teal prose-code:bg-slate-border/30 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-[#0a101a] prose-pre:border prose-pre:border-slate-border text-slate-300 leading-loose">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      <article className="prose prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 prose-pre:bg-[#0a101a] prose-pre:border prose-pre:border-slate-border text-slate-300 leading-loose">
+        <ReactMarkdown 
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeHighlight]}
+        >
           {post.content}
         </ReactMarkdown>
       </article>

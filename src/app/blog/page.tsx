@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { getAllPosts } from '@/lib/blog';
+import BlogList from '@/components/BlogList';
 
 export default function BlogIndex() {
   const posts = getAllPosts();
@@ -18,44 +19,7 @@ export default function BlogIndex() {
         <p className="text-slate-300">Notes on systems programming, architecture, and exploration.</p>
       </div>
 
-      <div className="flex flex-col gap-8">
-        {posts.map((post) => (
-          <Link 
-            key={post.slug} 
-            href={`/blog/${post.slug}`}
-            className="group border border-slate-border p-6 hover:border-slate-500 transition-colors bg-[#0a101a] block relative"
-          >
-            {/* Corner Accents */}
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent-teal opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent-teal opacity-0 group-hover:opacity-100 transition-opacity" />
-            
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-2 mb-4">
-              <h2 className="text-xl font-bold text-foreground group-hover:text-accent-teal transition-colors">
-                {post.title}
-              </h2>
-              <time className="text-slate-muted text-sm shrink-0">
-                {new Date(post.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </time>
-            </div>
-            
-            <div className="flex gap-2">
-              {post.tags.map(tag => (
-                <span key={tag} className="text-xs px-2 py-1 bg-slate-border/50 text-slate-muted border border-slate-border uppercase">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </Link>
-        ))}
-        
-        {posts.length === 0 && (
-          <div className="text-slate-muted italic">No posts found. Add markdown files to src/content/blog to see them here.</div>
-        )}
-      </div>
+      <BlogList posts={posts} />
     </div>
   );
 }
