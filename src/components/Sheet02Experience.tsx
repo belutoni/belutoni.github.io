@@ -44,16 +44,18 @@ export default function Sheet02Experience() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {experiences.map((exp) => (
           <div key={exp.id} className="border border-slate-border p-6 flex flex-col h-full hover:border-slate-500 transition-colors bg-[#0a101a] group">
-            <div className="text-3xl font-bold text-slate-muted group-hover:text-foreground transition-colors mb-4">
-              {exp.id}
+            <div className="flex flex-col lg:min-h-[180px]">
+              <div className="text-3xl font-bold text-slate-muted group-hover:text-foreground transition-colors mb-4">
+                {exp.id}
+              </div>
+              
+              <h3 className="text-lg font-bold text-foreground mb-2">
+                {exp.institution}
+              </h3>
+              
+              <div className="text-accent-teal text-sm mb-1">{exp.role}</div>
+              <div className="text-slate-muted text-xs mb-4 uppercase">{exp.period}</div>
             </div>
-            
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {exp.institution}
-            </h3>
-            
-            <div className="text-accent-teal text-sm mb-1">{exp.role}</div>
-            <div className="text-slate-muted text-xs mb-4 uppercase">{exp.period}</div>
             
             <ul className="text-sm text-slate-300 pt-4 border-t border-slate-border/50 list-none space-y-2">
               {exp.metrics.map((metric, idx) => (
