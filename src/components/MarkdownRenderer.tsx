@@ -16,10 +16,13 @@ const PreBlock = ({ children, ...props }: any) => {
   const childArray = React.Children.toArray(children);
   if (childArray.length > 0) {
     const codeChild = childArray[0];
-    if (React.isValidElement(codeChild) && codeChild.props.className) {
-      const match = /language-(\w+)/.exec(codeChild.props.className);
-      if (match) {
-        language = match[1];
+    if (React.isValidElement(codeChild)) {
+      const element = codeChild as React.ReactElement<{ className?: string }>;
+      if (element.props.className) {
+        const match = /language-(\w+)/.exec(element.props.className);
+        if (match) {
+          language = match[1];
+        }
       }
     }
   }
