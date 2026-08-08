@@ -51,7 +51,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </div>
       </header>
 
-      <article className="prose prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none text-slate-300 leading-loose">
+      <article className="prose prose-invert prose-slate max-w-none prose-headings:text-foreground prose-a:text-accent-teal hover:prose-a:text-accent-teal/80 text-slate-300 leading-loose">
         <MarkdownRenderer content={post.content} />
       </article>
     </div>

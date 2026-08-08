@@ -39,7 +39,7 @@ const PreBlock = ({ children, ...props }: any) => {
   return (
     <div className="relative group rounded border border-slate-border bg-[#0a101a] my-6 overflow-hidden">
       <div className="flex justify-between items-center px-4 py-2 border-b border-slate-border/50 bg-[#0d141f]">
-        <span className="text-[10px] uppercase text-accent-teal font-bold tracking-widest bg-accent-teal/10 px-2 py-0.5 rounded border border-accent-teal/20">{language}</span>
+        <span className="text-xs text-slate-400 lowercase font-medium tracking-wide">{language}</span>
         <button 
           onClick={handleCopy} 
           className="text-slate-muted hover:text-accent-teal transition-colors flex items-center gap-1.5 text-xs"
@@ -49,7 +49,7 @@ const PreBlock = ({ children, ...props }: any) => {
           {copied ? "COPIED" : "COPY"}
         </button>
       </div>
-      <pre ref={preRef} className="p-4 overflow-x-auto text-sm bg-transparent m-0 border-none [&>code]:!bg-transparent [&>code]:!p-0" {...props}>
+      <pre ref={preRef} className="!p-4 overflow-x-auto text-sm bg-transparent !m-0 !border-none [&>code]:!bg-transparent [&>code]:!p-0" {...props}>
         {children}
       </pre>
     </div>
