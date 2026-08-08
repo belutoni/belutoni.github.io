@@ -31,7 +31,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <ArrowLeft className="w-4 h-4" /> Back to Logs
       </Link>
 
-      <header className="mb-12 border-b border-slate-border/50 pb-8">
+      <header className="mb-6 border-b border-slate-border/50 pb-8">
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
           {post.title}
         </h1>

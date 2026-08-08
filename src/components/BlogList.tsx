@@ -21,7 +21,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
   });
 
   return (
-    <div className="flex flex-col gap-8">
+    <div>
       {/* Search and Filter Controls */}
       <div className="flex flex-col md:flex-row gap-4 mb-4">
         <div className="relative grow">
@@ -40,10 +40,10 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
       {/* Tags Filter */}
       {allTags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-8">
           <button 
             onClick={() => setSelectedTag(null)}
-            className={`text-xs px-3 py-1.5 border transition-colors ${selectedTag === null ? 'bg-accent-teal/10 border-accent-teal text-accent-teal' : 'bg-[#0a101a] border-slate-border text-slate-muted hover:border-slate-500'}`}
+            className={`text-xs px-3 py-1.5 border transition-colors cursor-pointer ${selectedTag === null ? 'bg-accent-teal/10 border-accent-teal text-accent-teal' : 'bg-[#0a101a] border-slate-border text-slate-muted hover:border-slate-500'}`}
           >
             ALL
           </button>
@@ -51,7 +51,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             <button
               key={tag}
               onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-              className={`text-xs px-3 py-1.5 border transition-colors uppercase ${selectedTag === tag ? 'bg-accent-teal/10 border-accent-teal text-accent-teal' : 'bg-[#0a101a] border-slate-border text-slate-muted hover:border-slate-500'}`}
+              className={`text-xs px-3 py-1.5 border transition-colors uppercase cursor-pointer ${selectedTag === tag ? 'bg-accent-teal/10 border-accent-teal text-accent-teal' : 'bg-[#0a101a] border-slate-border text-slate-muted hover:border-slate-500'}`}
             >
               {tag}
             </button>
@@ -75,11 +75,11 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent-teal opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent-teal opacity-0 group-hover:opacity-100 transition-opacity" />
             
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-2 mb-4">
+            <div className="flex flex-col gap-1 mb-4">
               <h2 className="text-xl font-bold text-foreground group-hover:text-accent-teal transition-colors">
                 {post.title}
               </h2>
-              <time className="text-slate-muted text-sm shrink-0">
+              <time className="text-slate-muted text-xs">
                 {new Date(post.date).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
