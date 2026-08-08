@@ -21,7 +21,7 @@ export default function Sheet01Projects() {
         "Developed a monolithic x86 kernel and a custom bootloader in NASM Assembly to initialize the GDT, enable the A20 line, and transition the CPU to 32-bit Protected Mode.",
         "Built a type-safe VGA text-mode driver using C++23 concepts to enforce compile-time constraints on stream formatting."
       ],
-      link: "https://github.com/belutoni/minimal-x86-os"
+      link: "https://github.com/belutoni/bost"
     }
   ];
 
