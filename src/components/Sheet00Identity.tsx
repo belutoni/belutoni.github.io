@@ -33,7 +33,7 @@ export default function Sheet00Identity() {
         </div>
         
         <div className="md:col-span-8 text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl">
-          First-year Computer Science student passionate about low-level systems programming and computer architecture. Eager to deepen expertise in embedded platforms, ARMv8 architectures, and Linux kernel development.
+          First-year Computer Science student passionate about low-level systems programming and computer architecture. I design software where architecture becomes tangible-kernels, firmware, boot flows, assemblers, and the tools that make machines understandable.
         </div>
       </div>
     </section>

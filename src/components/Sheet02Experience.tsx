@@ -15,10 +15,9 @@ export default function Sheet02Experience() {
       role: "Embedded Linux Kernel Intern",
       period: "Summer 2026",
       metrics: [
-        "Won 1st place at the hackathon by co-developing an interactive retro system monitor on the NXP i.MX93 FRDM.",
-        "Developed custom SPI-based ST7789 display and I2C-based BMP280 sensor drivers, implementing fixed-point calibration inside the kernel.",
-        "Wrote character drivers utilizing copy_to_user and copy_from_user for user-space communication, managing hardware interrupts, GPIOs, and software debouncing.",
-        "Ranked 1st in 2/3 competitive technical assessments evaluating Linux kernel subsystem internals."
+        "1st Place Hackathon Winner: Developed an interactive retro system monitor for NXP i.MX93.",
+        "Engineered custom kernel drivers (SPI ST7789, I2C BMP280) with fixed-point calibration and hardware interrupts.",
+        "Ranked 1st in competitive technical assessments on Linux kernel internals."
       ]
     },
     {
@@ -27,10 +26,9 @@ export default function Sheet02Experience() {
       role: "Systems & Firmware Engineering",
       period: "Summer 2026",
       metrics: [
-        "Built an ARMv8 Firmware Image Package (FIP) containing U-Boot (BL33), TF-A (BL31), and OP-TEE (BL32) for the NXP i.MX93, deploying it via the Serial Download Protocol (SDP).",
-        "Compiled a custom ARM64 Linux kernel, built a tailored rootfs using Buildroot, and automated the boot sequence using custom U-Boot environments.",
-        "Generated an ARM64 Debian rootfs using debootstrap and implemented an A/B redundant partitioning scheme for robust OTA updates.",
-        "Created an out-of-tree Buildroot external package (BR2_EXTERNAL) to cross-compile a C application utilizing libgpiod2 for GPIO control."
+        "Built and deployed an ARMv8 Firmware Image Package (U-Boot, TF-A, OP-TEE) for the NXP i.MX93.",
+        "Configured and compiled custom ARM64 Linux kernels and Debian/Buildroot filesystems.",
+        "Implemented A/B redundant partitioning schemes and automated U-Boot environments."
       ]
     }
   ];
