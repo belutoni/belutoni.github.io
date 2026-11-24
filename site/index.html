@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101419">
+  <meta name="description" content="Antonie-Gabriel Belu is a computer science student in Bucharest building systems software in modern C++ and exploring Rust.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Antonie-Gabriel Belu — Systems programming">
+  <meta property="og:description" content="Modern C++, low-level systems, and a little Rust.">
+  <meta property="og:url" content="https://belux0.dev/">
+  <meta property="og:image" content="https://belux0.dev/assets/processor.webp">
+  <link rel="canonical" href="https://belux0.dev/">
+  <link rel="icon" href="/assets/mark.png" type="image/png">
+  <link rel="preload" href="/assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/cache-lab.js" defer></script>
+  <title>Antonie-Gabriel Belu — Systems programming</title>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="/" aria-label="belux0 home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>belux0<span class="accent">.</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#work">Work</a>
+        <a href="#lab">Cache lab</a>
+        <a href="#about">About</a>
+      </nav>
+      <a class="button button-small header-contact" href="#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="signal" aria-hidden="true"></span>Systems programming</p>
+        <h1 id="hero-title">Antonie-Gabriel<br>Belu<span class="accent">.</span></h1>
+        <p class="hero-lead">I build close to the machine.</p>
+        <p class="hero-summary">I’m a computer science student in Bucharest. I work mostly in modern C++, from the x86 boot process to event-driven Windows software, and explore Rust along the way.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">Explore my work</a>
+          <a class="button" href="https://github.com/belutoni">GitHub</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <div class="hero-art">
+          <img src="/assets/processor.webp" alt="Concept illustration of an exploded processor package with separated layers" width="1024" height="1024" fetchpriority="high">
+          <span class="figure-corner top-left" aria-hidden="true"></span>
+          <span class="figure-corner top-right" aria-hidden="true"></span>
+          <span class="figure-corner bottom-left" aria-hidden="true"></span>
+          <span class="figure-corner bottom-right" aria-hidden="true"></span>
+        </div>
+        <figcaption><span>Processor package</span><span>Concept illustration</span></figcaption>
+      </figure>
+    </section>
+
+    <section id="work" class="section wrap" aria-labelledby="work-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Projects</p>
+          <h2 id="work-title">Selected work<span class="accent">.</span></h2>
+        </div>
+        <a class="text-link section-link" href="https://github.com/belutoni?tab=repositories">All repositories</a>
+      </div>
+      <div class="project-grid">
+        <article class="project">
+          <div class="project-visual bean-visual" aria-hidden="true">
+            <div class="flow-source"><span class="folder-icon"></span>Downloads</div>
+            <div class="flow-connector"></div>
+            <div class="flow-results">
+              <span><b>.jpg</b> Pictures</span>
+              <span><b>.pdf</b> Documents</span>
+              <span><b>.mp4</b> Videos</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <ul class="tags" aria-label="Technologies"><li>C++23</li><li>Win32 API</li></ul>
+            <h3>bean</h3>
+            <p>A Windows background utility that sorts Downloads. It sleeps until the file system signals a change, retries locked files, and resolves name collisions without overwriting anything.</p>
+            <a class="text-link" href="https://github.com/belutoni/bean" aria-label="View bean source on GitHub">View source</a>
+          </div>
+        </article>
+        <article class="project">
+          <div class="project-visual bost-visual" aria-hidden="true">
+            <div class="boot-stage"><span>16-bit</span><strong>Bootloader</strong></div>
+            <div class="boot-stage"><span>32-bit</span><strong>Protected mode</strong></div>
+            <div class="boot-stage"><span>C++23</span><strong>Kernel</strong></div>
+          </div>
+          <div class="project-body">
+            <ul class="tags" aria-label="Technologies"><li>C++23</li><li>NASM</li><li>QEMU</li></ul>
+            <h3>bost</h3>
+            <p>A minimal x86 operating system. Its assembly bootloader enters 32-bit protected mode before handing control to a C++ kernel with a type-safe VGA text-mode driver.</p>
+            <a class="text-link" href="https://github.com/belutoni/bost" aria-label="View bost source on GitHub">View source</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap contribution-section" aria-labelledby="open-source-title">
+      <div>
+        <p class="eyebrow">Upstream</p>
+        <h2 id="open-source-title">Open source<span class="accent">.</span></h2>
+      </div>
+      <div class="contribution-list">
+        <article class="contribution">
+          <div>
+            <h3>LibreOffice</h3>
+            <p>Fixed a VBA compatibility bug in the Basic runtime and added a StarBASIC regression test.</p>
+            <a class="text-link" href="https://gerrit.libreoffice.org/c/core/+/203225">Gerrit change 203225</a>
+          </div>
+          <span class="language">C++</span>
+        </article>
+        <article class="contribution">
+          <div>
+            <h3>egui</h3>
+            <p>Fixed double- and triple-click detection so a click sequence cannot span distant positions and still count as a multi-click.</p>
+            <a class="text-link" href="https://github.com/emilk/egui/pull/7817">Pull request #7817</a>
+          </div>
+          <span class="language">Rust</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="lab" class="section wrap" aria-labelledby="lab-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Interactive demo</p>
+          <h2 id="lab-title">Cache lab<span class="accent">.</span></h2>
+        </div>
+        <p class="section-intro">Walk the same C++ array in two orders. Watch which cache lines stay resident and see how access order changes the miss count.</p>
+      </div>
+      <div class="lab" id="cache-demo">
+        <div class="lab-controls">
+          <fieldset class="patterns" disabled>
+            <legend>Traversal order</legend>
+            <div class="segmented">
+              <label><input type="radio" name="pattern" value="row" checked><span>Row-major</span></label>
+              <label><input type="radio" name="pattern" value="column"><span>Column-major</span></label>
+            </div>
+          </fieldset>
+          <pre class="lab-code" aria-label="C++ traversal example"><code id="traversal-code">for (int r = 0; r &lt; 4; ++r)
+  for (int c = 0; c &lt; 4; ++c)
+    read(matrix[r][c]);</code></pre>
+          <div class="lab-actions">
+            <button class="button button-primary" type="button" id="run" disabled>Run</button>
+            <button class="button" type="button" id="step" disabled>Step</button>
+            <button class="utility-button" type="button" id="reset" disabled>Reset</button>
+          </div>
+          <p class="model-note">The model holds two 16-byte lines and evicts the least recently used line. Each row occupies one line.</p>
+        </div>
+        <div class="lab-display">
+          <div class="lab-readout">
+            <div><span>Reads</span><strong id="reads">0<span class="counter-total"> / 16</span></strong></div>
+            <div><span>Hits</span><strong class="hit-value" id="hits">0</strong></div>
+            <div><span>Misses</span><strong class="miss-value" id="misses">0</strong></div>
+          </div>
+          <table class="memory" id="memory">
+            <caption>Memory layout <span>4 × 4 integers</span></caption>
+            <thead class="visually-hidden">
+              <tr><th scope="col">Cache line</th><th scope="col">Column 0</th><th scope="col">Column 1</th><th scope="col">Column 2</th><th scope="col">Column 3</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">0x00</th><td>00</td><td>01</td><td>02</td><td>03</td></tr>
+              <tr><th scope="row">0x10</th><td>04</td><td>05</td><td>06</td><td>07</td></tr>
+              <tr><th scope="row">0x20</th><td>08</td><td>09</td><td>10</td><td>11</td></tr>
+              <tr><th scope="row">0x30</th><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+            </tbody>
+          </table>
+          <p class="cache-lines"><span>Cached lines</span><strong id="lines">Empty</strong></p>
+          <p class="last-read" id="last-read">Cache is empty.</p>
+          <p class="visually-hidden" id="lab-announcement" role="status"></p>
+        </div>
+      </div>
+      <noscript><p class="model-note">In this model, row-major traversal gets 12 hits and 4 misses. Column-major traversal gets 16 misses. Enable JavaScript to step through each read.</p></noscript>
+    </section>
+
+    <section id="about" class="section wrap about" aria-labelledby="about-title">
+      <div>
+        <p class="eyebrow">Background</p>
+        <h2 id="about-title">About me<span class="accent">.</span></h2>
+        <p>I study computer science at the University of Bucharest. I’m especially interested in how a program starts, how it uses memory, and how it waits for work. C++ is where I spend most of my time. I also use Rust and assembly when a project calls for them.</p>
+      </div>
+      <dl class="profile-details">
+        <div><dt>Education</dt><dd>University of Bucharest<br><span>BSc in Computer Science · 2025–2028 (expected)</span></dd></div>
+        <div><dt>Tooling</dt><dd>Modern C++, Win32, Linux, CMake, and Git</dd></div>
+        <div><dt>Awards</dt><dd>National ICT Olympiad bronze (2025)<br><span>3rd place at MateInfoUB in informatics (2025)</span></dd></div>
+      </dl>
+    </section>
+
+    <section id="contact" class="section wrap contact" aria-labelledby="contact-title">
+      <div>
+        <p class="eyebrow"><span class="signal" aria-hidden="true"></span>Internship availability</p>
+        <h2 id="contact-title">Let’s talk<span class="accent">.</span></h2>
+        <p>I’m available for a full-time internship for 13–17 weeks between May and September 2027.</p>
+      </div>
+      <a class="button button-primary" href="mailto:belutoni06@proton.me">belutoni06@proton.me</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a class="wordmark" href="#top"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>belux0<span class="accent">.</span></a>
+      <span>Antonie-Gabriel Belu · Bucharest, Romania</span>
+      <nav aria-label="Footer navigation"><a href="/blog/">Notes</a><a href="https://github.com/belutoni">GitHub</a></nav>
+    </div>
+  </footer>
+</body>
+</html>
