@@ -6,122 +6,160 @@ const vm = require("node:vm");
 
 const site = path.join(__dirname, "../site");
 const home = fs.readFileSync(path.join(site, "index.html"), "utf8");
+const source = fs.readFileSync(path.join(site, "assets/bean-trace.js"), "utf8");
 
-function controls() {
-  const control = (initial = {}) => ({
-    events: new Map(),
-    attributes: new Map(),
-    hidden: false,
-    disabled: false,
-    textContent: "",
-    setAttribute(key, value) { this.attributes.set(key, value); },
-    removeAttribute(key) { this.attributes.delete(key); },
-    toggleAttribute(key, value) {
-      if (value) this.setAttribute(key, "");
-      else this.removeAttribute(key);
-    },
-    addEventListener(type, listener) { this.events.set(type, listener); },
-    click() {
-      if (!this.disabled) this.events.get("click")();
-    },
-    focus() { this.focused = true; },
-    ...initial,
+function fixture() {
+  function element(properties = {}) {
+    return {
+      attributes: new Map(),
+      handlers: new Map(),
+      dataset: {},
+      style: { setProperty() {} },
+      setAttribute(name, value) { this.attributes.set(name, value); },
+      removeAttribute(name) { this.attributes.delete(name); },
+      toggleAttribute(name, value) {
+        if (value) this.setAttribute(name, "");
+        else this.removeAttribute(name);
+      },
+      addEventListener(type, handler) { this.handlers.set(type, handler); },
+      dispatch(type = "click") { this.handlers.get(type)(); },
+      getAnimations() { return []; },
+      replaceChildren(...children) { this.children = children; },
+      ...properties,
+    };
+  }
+
+  const buttons = Object.fromEntries(["signal", "wake", "scan", "attempt"].map((id) => [
+    id, element({ dataset: { traceJump: id }, querySelector: () => element() }),
+  ]));
+  const objects = Array.from({ length: 3 }, () => element());
+  const plots = ["handle", "worker"].map((kind) => element({ dataset: { wave: kind }, nextElementSibling: element() }));
+  const selectors = [
+    ".trace-scope", ".trace-storage", "#trace-event", "#trace-api", "#trace-detail", "#trace-progress",
+    "#trace-position", "#trace-play", "#trace-next", "#trace-reset", "#trace-scenario", ".window-toggle",
+    "#trace-content", ".trace-packet", ".trace-transfer", ".trace-waveforms", ".trace-input", ".trace-controls",
+  ];
+  const controls = Object.fromEntries(selectors.map((selector) => [selector, element()]));
+  controls["#trace-scenario"].value = "locked";
+  controls[".trace-waveforms"].querySelectorAll = () => plots;
+  const root = element({
+    querySelector: (selector) => controls[selector],
+    querySelectorAll: (selector) => ({
+      "[data-trace-jump]": Object.values(buttons),
+      "[data-trace-object]": objects.map((status) => element({ querySelector: () => status })),
+    })[selector],
   });
-
-  const buttons = Array.from({ length: 4 }, () => control({ disabled: true }));
-  const stages = buttons.map((button) => control({ querySelector: () => button }));
-  const statuses = Array.from({ length: 3 }, () => control());
-  const nodes = statuses.map((status) => control({ querySelector: () => status }));
-  const next = control();
-  const reset = control();
-  const detail = control();
-  const actions = control({ hidden: true });
-  const toggle = control({ hidden: true });
-  const content = control();
-  const root = {
-    dataset: {},
-    querySelectorAll(selector) {
-      return { "[data-trace-step]": stages, "[data-trace-node]": nodes }[selector];
+  const timers = new Map();
+  let timerId = 0;
+  vm.runInNewContext(source, {
+    document: { querySelector: () => root, createElement: () => element() },
+    matchMedia: () => ({ matches: true }),
+    setTimeout(callback) {
+      timers.set(++timerId, callback);
+      return timerId;
     },
-    querySelector(selector) {
-      return {
-        "#trace-next": next, "#trace-reset": reset, "#trace-detail": detail,
-        ".trace-actions": actions, ".window-toggle": toggle, "#trace-content": content,
-      }[selector];
-    },
-  };
-  const source = fs.readFileSync(path.join(site, "assets/bean-trace.js"), "utf8");
-  vm.runInNewContext(source, { document: { querySelector: () => root } });
-
+    clearTimeout: (id) => timers.delete(id),
+  });
   return {
-    next, reset, detail, actions, buttons, toggle, content,
-    current: () => stages.flatMap((stage, index) =>
-      stage.attributes.get("aria-current") === "step" ? [index] : []),
-    activeNode: () => nodes.findIndex((node) => node.attributes.has("data-active")),
-    flow: () => statuses.map((status) => status.textContent),
+    buttons, controls, timers,
+    event: () => root.dataset.event,
+    statuses: () => objects.map((object) => object.textContent),
+    waves: () => plots.map((plot) => plot.nextElementSibling.textContent),
+    step: () => controls["#trace-next"].dispatch(),
+    scenario(value) {
+      controls["#trace-scenario"].value = value;
+      controls["#trace-scenario"].dispatch("change");
+    },
+    tick() {
+      const [id, callback] = timers.entries().next().value;
+      timers.delete(id);
+      callback();
+    },
   };
 }
 
-test("advances through a lock and a successful retry, then replays and resets", () => {
-  const trace = controls();
-  assert.equal(trace.actions.hidden, false);
-  assert.deepEqual(trace.current(), [0]);
-  assert.equal(trace.reset.disabled, true);
-  assert.match(trace.detail.textContent, /indefinitely/);
-
-  trace.next.click();
-  assert.deepEqual(trace.current(), [1]);
-  assert.equal(trace.reset.disabled, false);
-  assert.match(trace.detail.textContent, /500 ms/);
-
-  trace.next.click();
-  assert.deepEqual(trace.current(), [2]);
-  assert.match(trace.detail.textContent, /one second/);
-  assert.equal(trace.activeNode(), 1);
-  assert.deepEqual(trace.flow(), ["File still here", "1 pending retry", "Awaiting file"]);
-
-  trace.next.click();
-  assert.deepEqual(trace.current(), [3]);
-  assert.match(trace.detail.textContent, /Documents/);
-  assert.equal(trace.activeNode(), 2);
-  assert.deepEqual(trace.flow(), ["File moved", "Empty", "invoice.pdf"]);
-  assert.equal(trace.next.textContent, "Replay trace");
-
-  trace.next.click();
-  assert.deepEqual(trace.current(), [0]);
-  assert.equal(trace.next.textContent, "Next event");
-
-  trace.next.click();
-  trace.reset.click();
-  assert.deepEqual(trace.current(), [0]);
-  assert.equal(trace.next.focused, true);
-  assert.equal(trace.reset.disabled, true);
+test("Windows signals before the worker rearms, waits, and scans", () => {
+  const trace = fixture();
+  assert.deepEqual(trace.waves(), ["Armed", "Blocked"]);
+  trace.step();
+  assert.equal(trace.event(), "signal");
+  assert.deepEqual(trace.waves(), ["Signaled", "Ready"]);
+  assert.match(trace.controls["#trace-detail"].textContent, /no filename/);
+  trace.step();
+  assert.equal(trace.event(), "wake");
+  assert.deepEqual(trace.waves(), ["Rearmed", "Running"]);
+  trace.step();
+  assert.equal(trace.event(), "settle");
+  assert.deepEqual(trace.waves(), ["Rearmed", "500 ms wait"]);
+  trace.step();
+  assert.equal(trace.event(), "scan");
 });
 
-test("timeline buttons select events and minimizing preserves the current state", () => {
-  const trace = controls();
-  trace.buttons[2].click();
-  assert.deepEqual(trace.current(), [2]);
-  assert.equal(trace.toggle.hidden, false);
+test("a locked file stays in Downloads during the pending retry", () => {
+  const trace = fixture();
+  trace.buttons.attempt.dispatch();
+  trace.step();
+  assert.equal(trace.event(), "locked");
+  assert.deepEqual(trace.statuses(), ["invoice.pdf still here", "1 pending move", "No file"]);
+  trace.step();
+  assert.equal(trace.event(), "backoff");
+  assert.deepEqual(trace.waves(), ["Rearmed", "1 s wait"]);
+  trace.step();
+  assert.equal(trace.event(), "retry");
+  assert.match(trace.controls["#trace-api"].textContent, /WAIT_TIMEOUT/);
+  trace.step();
+  assert.equal(trace.event(), "moved");
+  assert.deepEqual(trace.statuses(), ["File left Downloads", "Empty", "invoice.pdf"]);
+  assert.equal(trace.controls["#trace-play"].textContent, "Replay trace");
+});
 
-  trace.toggle.click();
-  assert.equal(trace.content.hidden, true);
-  assert.equal(trace.toggle.attributes.get("aria-expanded"), "false");
-  assert.equal(trace.toggle.attributes.get("aria-label"), "Restore bean window");
+test("the ready and collision paths use the appropriate destination names", () => {
+  const trace = fixture();
+  trace.scenario("ready");
+  trace.buttons.attempt.dispatch();
+  trace.step();
+  assert.equal(trace.event(), "moved");
+  assert.deepEqual(trace.statuses(), ["File left Downloads", "Empty", "invoice.pdf"]);
 
-  trace.toggle.click();
-  assert.equal(trace.content.hidden, false);
-  assert.equal(trace.toggle.attributes.get("aria-expanded"), "true");
-  assert.equal(trace.toggle.attributes.get("aria-label"), "Minimize bean window");
-  assert.deepEqual(trace.current(), [2]);
-  assert.equal(trace.activeNode(), 1);
+  trace.scenario("collision");
+  assert.equal(trace.event(), "idle");
+  assert.equal(trace.statuses()[2], "invoice.pdf already here");
+  trace.buttons.attempt.dispatch();
+  trace.step();
+  assert.equal(trace.event(), "collision");
+  assert.deepEqual(trace.statuses(), ["invoice.pdf", "Empty", "invoice.pdf already here"]);
+  trace.step();
+  assert.equal(trace.event(), "renamed");
+  assert.equal(trace.statuses()[2], "invoice (1).pdf added");
+});
+
+test("playback pauses and restarts without leaving a scheduled step behind", () => {
+  const trace = fixture();
+  const { "#trace-play": play, "#trace-reset": reset, ".window-toggle": toggle, "#trace-content": content } = trace.controls;
+  play.dispatch();
+  assert.equal(trace.event(), "signal");
+  assert.equal(trace.timers.size, 1);
+  trace.tick();
+  assert.equal(trace.event(), "wake");
+  play.dispatch();
+  assert.equal(trace.timers.size, 0);
+  play.dispatch();
+  toggle.dispatch();
+  assert.equal(trace.timers.size, 0);
+  assert.equal(content.hidden, true);
+  toggle.dispatch();
+  assert.equal(content.hidden, false);
+  assert.equal(trace.event(), "settle");
+  reset.dispatch();
+  assert.equal(trace.event(), "idle");
 });
 
 test("home includes the static trace, background and all honors, with no cache demo", () => {
-  assert.equal((home.match(/data-trace-step/g) ?? []).length, 4);
-  assert.match(home, /class="trace-actions" hidden/);
-  assert.match(home, /id="trace-detail" role="status"/);
-  assert.match(home, /<noscript>[\s\S]*?invoice\.pdf[\s\S]*?<\/noscript>/);
+  assert.equal((home.match(/data-trace-jump/g) ?? []).length, 4);
+  assert.match(home, /id="bean-window-label">bean</);
+  assert.match(home, /class="trace-controls" hidden/);
+  assert.match(home, /class="trace-readout" role="status"/);
+  assert.match(home, /<noscript>[\s\S]*?MoveFileExW[\s\S]*?<\/noscript>/);
   for (const id of ["work", "open-source", "background", "about", "contact"]) assert(home.includes(`id="${id}"`));
   for (const honor of ["National ICT Olympiad", "MateInfoUB", "Acadnet Applied Informatics Olympiad", "Adolf Haimovici National Applied Mathematics Competition"]) {
     assert(home.includes(honor));

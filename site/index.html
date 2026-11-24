@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1a2248">
+  <meta name="theme-color" content="#141c39">
   <meta name="description" content="Antonie-Gabriel Belu is a computer science student in Bucharest building systems software in modern C++ and exploring Rust.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Antonie-Gabriel Belu — Systems programming">
@@ -12,11 +12,12 @@
   <link rel="canonical" href="https://belux0.dev/">
   <link rel="icon" href="/assets/mark.png" type="image/png">
   <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/style.css?v=2">
-  <script src="/assets/bean-trace.js?v=2" defer></script>
+  <link rel="stylesheet" href="/assets/style.css?v=3">
+  <link rel="stylesheet" href="/assets/bean-trace.css">
+  <script src="/assets/bean-trace.js?v=3" defer></script>
   <title>Antonie-Gabriel Belu — Systems programming</title>
 </head>
-<body id="top">
+<body id="top" class="portfolio-home">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
@@ -32,77 +33,117 @@
 
   <main id="main" tabindex="-1">
     <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="signal-field" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
       <div class="hero-copy">
         <h1 id="hero-title"><span>Antonie-Gabriel</span> <span>Belu</span></h1>
-        <p class="hero-lead">Systems programming in modern C++.</p>
+        <p class="hero-lead">Systems programming in modern&nbsp;C++.</p>
         <p class="hero-summary">I study computer science in Bucharest. I’ve built a Windows file watcher, a small x86 kernel, and contributed patches to LibreOffice and egui.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#work">Explore the projects</a>
           <a class="text-link" href="https://github.com/belutoni">GitHub</a>
         </div>
       </div>
-      <figure class="trace" id="bean-trace" aria-labelledby="bean-window-label" data-stage="0">
+      <figure class="trace" id="bean-trace" aria-labelledby="bean-window-label" data-tone="idle">
         <figcaption class="window-titlebar">
-          <div class="window-app"><span class="window-icon" aria-hidden="true"></span><span id="bean-window-label">bean <span class="window-divider">/</span> File Watcher</span></div>
-          <button class="window-toggle" type="button" aria-label="Minimize bean window" aria-expanded="true" aria-controls="trace-content" hidden><span aria-hidden="true"></span></button>
+          <div class="window-app"><span class="window-icon" aria-hidden="true"></span><span id="bean-window-label">bean</span></div>
+          <span class="window-kind">Win32 trace</span>
+          <button class="window-toggle" type="button" aria-label="Minimize bean window" aria-expanded="true" aria-controls="trace-content" hidden></button>
         </figcaption>
         <div id="trace-content">
-          <div class="trace-header">
-            <h2 id="trace-title">A download, interrupted</h2>
-            <span class="file-name">invoice.pdf</span>
-          </div>
+          <header class="trace-header">
+            <div>
+              <h2>From signal to file move</h2>
+              <p>Follow an example download through the Windows watcher.</p>
+            </div>
+            <div class="trace-input" hidden>
+              <label for="trace-scenario">Scenario</label>
+              <select id="trace-scenario">
+                <option value="locked">Locked download</option>
+                <option value="ready">Ready to move</option>
+                <option value="collision">Name already taken</option>
+              </select>
+            </div>
+          </header>
 
-          <div class="trace-diagram" role="group" aria-labelledby="trace-diagram-title">
-            <p id="trace-diagram-title">File flow</p>
-            <ol class="trace-flow">
-              <li data-trace-node data-active>
-                <span class="flow-icon flow-folder" aria-hidden="true"></span>
-                <strong>Downloads</strong>
-                <span data-node-status>Watching</span>
+          <div class="trace-scope">
+            <ol class="trace-bus" aria-label="Execution path">
+              <li>
+                <button type="button" data-trace-jump="signal" disabled>
+                  <span class="bus-owner">Windows</span>
+                  <span class="bus-icon bus-icon-signal" aria-hidden="true"></span>
+                  <strong>Signal</strong>
+                  <code>Change handle</code>
+                </button>
               </li>
-              <li data-trace-node>
-                <span class="flow-icon flow-queue" aria-hidden="true"></span>
-                <strong>Retry queue</strong>
-                <span data-node-status>Empty</span>
+              <li>
+                <button type="button" data-trace-jump="wake" aria-current="step" disabled>
+                  <span class="bus-owner">Worker</span>
+                  <span class="bus-icon bus-icon-wait" aria-hidden="true"></span>
+                  <strong>Wake &amp; rearm</strong>
+                  <code>Wait handles</code>
+                </button>
               </li>
-              <li data-trace-node>
-                <span class="flow-icon flow-folder" aria-hidden="true"></span>
-                <strong>Documents</strong>
-                <span data-node-status>Awaiting file</span>
+              <li>
+                <button type="button" data-trace-jump="scan" disabled>
+                  <span class="bus-owner">Worker</span>
+                  <span class="bus-icon bus-icon-scan" aria-hidden="true"></span>
+                  <strong>Scan Downloads</strong>
+                  <code>Extension map</code>
+                </button>
+              </li>
+              <li>
+                <button type="button" data-trace-jump="attempt" disabled>
+                  <span class="bus-owner">Win32 I/O</span>
+                  <span class="bus-icon bus-icon-move" aria-hidden="true"></span>
+                  <strong>Try the move</strong>
+                  <code>MoveFileExW</code>
+                </button>
               </li>
             </ol>
-          </div>
-
-          <ol class="trace-rail" aria-label="File event timeline">
-            <li data-trace-step aria-current="step">
-              <button type="button" data-trace-jump disabled>
-                <span class="trace-time">Before</span><span class="trace-point" aria-hidden="true"></span><strong>Waiting</strong>
-              </button>
-            </li>
-            <li data-trace-step>
-              <button type="button" data-trace-jump disabled>
-                <span class="trace-time">0 ms</span><span class="trace-point" aria-hidden="true"></span><strong>File changed</strong>
-              </button>
-            </li>
-            <li data-trace-step>
-              <button type="button" data-trace-jump disabled>
-                <span class="trace-time">≈ 500 ms</span><span class="trace-point" aria-hidden="true"></span><strong>File locked</strong>
-              </button>
-            </li>
-            <li data-trace-step>
-              <button type="button" data-trace-jump disabled>
-                <span class="trace-time">≈ 1,500 ms</span><span class="trace-point" aria-hidden="true"></span><strong>File moved</strong>
-              </button>
-            </li>
-          </ol>
-          <div class="trace-interaction">
-            <p id="trace-detail" role="status">The retry queue is empty. bean waits indefinitely for a directory change or a stop signal.</p>
-            <div class="trace-actions" hidden>
-              <button id="trace-next" class="button" type="button">Next event</button>
-              <button id="trace-reset" class="trace-reset" type="button">Reset</button>
+            <div class="trace-packet" aria-hidden="true"></div>
+            <div class="trace-waveforms" aria-hidden="true" title="Signal and worker state across the trace steps" hidden>
+              <div><span>Change handle</span><div class="trace-samples" data-wave="handle"></div><span data-wave-status>Armed</span></div>
+              <div><span>Worker</span><div class="trace-samples" data-wave="worker"></div><span data-wave-status>Blocked</span></div>
+            </div>
+            <div class="trace-readout" role="status" aria-atomic="true">
+              <div class="trace-readout-label">
+                <span id="trace-event">Waiting for a change</span>
+                <a id="trace-api" href="https://github.com/belutoni/bean/blob/42bf3ffc6ce3c1d63e9696c27fb47793c626f26b/src/organizer.cpp#L379-L395" aria-label="View WaitForMultipleObjects in the bean source">WaitForMultipleObjects</a>
+              </div>
+              <p id="trace-detail">With an empty retry queue, the worker blocks on the change and stop handles. The example file hasn’t arrived yet.</p>
             </div>
           </div>
-          <noscript><p class="trace-fallback">In this example, Windows reports a change involving <code>invoice.pdf</code>. After 500 ms, bean tries to move it and finds a lock. The file unlocks before the one-second retry, which moves it to Documents.</p></noscript>
+
+          <div class="trace-storage">
+            <p class="storage-label">File and queue state</p>
+            <ul class="trace-objects">
+              <li data-trace-object>
+                <span class="object-icon object-folder" aria-hidden="true"></span>
+                <strong>Downloads</strong><span data-object-status>Awaiting invoice.pdf</span>
+              </li>
+              <li data-trace-object>
+                <span class="object-icon object-queue" aria-hidden="true"></span>
+                <strong>Retry queue</strong><span data-object-status>Empty</span>
+              </li>
+              <li data-trace-object>
+                <span class="object-icon object-folder" aria-hidden="true"></span>
+                <strong>Documents</strong><span data-object-status>No file</span>
+              </li>
+            </ul>
+            <div class="trace-transfer" aria-hidden="true"></div>
+          </div>
+
+          <div class="trace-controls" hidden>
+            <div class="trace-actions">
+              <button id="trace-play" type="button">Run trace</button>
+              <button id="trace-next" type="button">Step</button>
+              <button id="trace-reset" type="button" aria-disabled="true">Reset</button>
+            </div>
+            <div class="trace-counter" aria-hidden="true"><span id="trace-position">01 / 10</span><div><span id="trace-progress"></span></div></div>
+          </div>
+          <noscript><p class="trace-fallback">Windows signals a change handle. The waiting worker wakes, rearms the watcher, then waits 500 ms before scanning Downloads. It maps the PDF to Documents and calls <code>MoveFileExW</code>. If the file is locked, it stays in Downloads and the move is queued for retry.</p></noscript>
         </div>
       </figure>
     </section>
