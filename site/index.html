@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101419">
+  <meta name="theme-color" content="#1a2248">
   <meta name="description" content="Antonie-Gabriel Belu is a computer science student in Bucharest building systems software in modern C++ and exploring Rust.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Antonie-Gabriel Belu — Systems programming">
   <meta property="og:description" content="Modern C++, low-level systems, and a little Rust.">
   <meta property="og:url" content="https://belux0.dev/">
-  <meta property="og:image" content="https://belux0.dev/assets/processor.webp">
   <link rel="canonical" href="https://belux0.dev/">
   <link rel="icon" href="/assets/mark.png" type="image/png">
-  <link rel="preload" href="/assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/bean-trace.js" defer></script>
   <script src="/assets/cache-lab.js" defer></script>
   <title>Antonie-Gabriel Belu — Systems programming</title>
 </head>
@@ -21,86 +21,108 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="wordmark" href="/" aria-label="belux0 home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>belux0<span class="accent">.</span></a>
+      <a class="wordmark" href="/" aria-label="belux0 home"><span class="mark" aria-hidden="true">b.</span>belux0.dev</a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="#work">Work</a>
+        <a href="#work">Projects</a>
         <a href="#lab">Cache lab</a>
         <a href="#about">About</a>
+        <a href="#contact">Contact</a>
       </nav>
-      <a class="button button-small header-contact" href="#contact">Get in touch</a>
     </div>
   </header>
 
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="signal" aria-hidden="true"></span>Systems programming</p>
-        <h1 id="hero-title">Antonie-Gabriel<br>Belu<span class="accent">.</span></h1>
-        <p class="hero-lead">I build close to the machine.</p>
-        <p class="hero-summary">I’m a computer science student in Bucharest. I work mostly in modern C++, from the x86 boot process to event-driven Windows software, and explore Rust along the way.</p>
+        <h1 id="hero-title"><span>Antonie-Gabriel</span> <span>Belu</span></h1>
+        <p class="hero-lead">Systems programming in modern C++.</p>
+        <p class="hero-summary">I study computer science in Bucharest. I’ve built a Windows file watcher, a small x86 kernel, and contributed patches to LibreOffice and egui.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#work">Explore my work</a>
-          <a class="button" href="https://github.com/belutoni">GitHub</a>
+          <a class="button button-primary" href="#work">Explore the projects</a>
+          <a class="text-link" href="https://github.com/belutoni">GitHub</a>
         </div>
       </div>
-      <figure class="hero-figure">
-        <div class="hero-art">
-          <img src="/assets/processor.webp" alt="Concept illustration of an exploded processor package with separated layers" width="1024" height="1024" fetchpriority="high">
-          <span class="figure-corner top-left" aria-hidden="true"></span>
-          <span class="figure-corner top-right" aria-hidden="true"></span>
-          <span class="figure-corner bottom-left" aria-hidden="true"></span>
-          <span class="figure-corner bottom-right" aria-hidden="true"></span>
+      <figure class="trace" id="bean-trace" aria-labelledby="trace-title">
+        <figcaption class="trace-header">
+          <div><p>From bean’s file watcher</p><h2 id="trace-title">A download, interrupted</h2></div>
+          <span class="file-name">invoice.pdf</span>
+        </figcaption>
+        <ol class="trace-rail" aria-label="File event timeline">
+          <li data-trace-step aria-current="step">
+            <span class="trace-time">Before change</span>
+            <span class="trace-point" aria-hidden="true"></span>
+            <strong>Waiting</strong>
+            <span class="trace-api">Idle wait</span>
+          </li>
+          <li data-trace-step>
+            <span class="trace-time">0 ms</span>
+            <span class="trace-point" aria-hidden="true"></span>
+            <strong>File changed</strong>
+            <span class="trace-api">Win32 notification</span>
+          </li>
+          <li data-trace-step>
+            <span class="trace-time">≈ 500 ms</span>
+            <span class="trace-point" aria-hidden="true"></span>
+            <strong>File locked</strong>
+            <span class="trace-api">Queued for retry</span>
+          </li>
+          <li data-trace-step>
+            <span class="trace-time">≈ 1,500 ms</span>
+            <span class="trace-point" aria-hidden="true"></span>
+            <strong>File moved</strong>
+            <span class="trace-api">In Documents</span>
+          </li>
+        </ol>
+        <div class="trace-interaction">
+          <p id="trace-detail" role="status">The retry queue is empty. bean waits indefinitely for a directory change or a stop signal.</p>
+          <div class="trace-actions" hidden>
+            <button id="trace-next" class="button" type="button">Next event</button>
+            <button id="trace-reset" class="trace-reset" type="button">Reset</button>
+          </div>
         </div>
-        <figcaption><span>Processor package</span><span>Concept illustration</span></figcaption>
+        <noscript><p class="trace-fallback">In this example, Windows reports a change involving <code>invoice.pdf</code>. After 500 ms, bean tries to move it and finds a lock. The file unlocks before the one-second retry, which moves it to Documents.</p></noscript>
       </figure>
     </section>
 
     <section id="work" class="section wrap" aria-labelledby="work-title">
       <div class="section-heading">
+        <h2 id="work-title">Projects</h2>
+        <a class="text-link" href="https://github.com/belutoni?tab=repositories">All repositories</a>
+      </div>
+
+      <article class="bean-case">
         <div>
-          <p class="eyebrow">Projects</p>
-          <h2 id="work-title">Selected work<span class="accent">.</span></h2>
+          <p class="project-role"><code>bean</code> <span>C++23 / Win32</span></p>
+          <h3>Waiting for work on Windows</h3>
         </div>
-        <a class="text-link section-link" href="https://github.com/belutoni?tab=repositories">All repositories</a>
-      </div>
-      <div class="project-grid">
-        <article class="project">
-          <div class="project-visual bean-visual" aria-hidden="true">
-            <div class="flow-source"><span class="folder-icon"></span>Downloads</div>
-            <div class="flow-connector"></div>
-            <div class="flow-results">
-              <span><b>.jpg</b> Pictures</span>
-              <span><b>.pdf</b> Documents</span>
-              <span><b>.mp4</b> Videos</span>
-            </div>
-          </div>
-          <div class="project-body">
-            <ul class="tags" aria-label="Technologies"><li>C++23</li><li>Win32 API</li></ul>
-            <h3>bean</h3>
-            <p>A Windows background utility that sorts Downloads. It sleeps until the file system signals a change, retries locked files, and resolves name collisions without overwriting anything.</p>
-            <a class="text-link" href="https://github.com/belutoni/bean" aria-label="View bean source on GitHub">View source</a>
-          </div>
-        </article>
-        <article class="project">
-          <div class="project-visual bost-visual" aria-hidden="true">
-            <div class="boot-stage"><span>16-bit</span><strong>Bootloader</strong></div>
-            <div class="boot-stage"><span>32-bit</span><strong>Protected mode</strong></div>
-            <div class="boot-stage"><span>C++23</span><strong>Kernel</strong></div>
-          </div>
-          <div class="project-body">
-            <ul class="tags" aria-label="Technologies"><li>C++23</li><li>NASM</li><li>QEMU</li></ul>
-            <h3>bost</h3>
-            <p>A minimal x86 operating system. Its assembly bootloader enters 32-bit protected mode before handing control to a C++ kernel with a type-safe VGA text-mode driver.</p>
-            <a class="text-link" href="https://github.com/belutoni/bost" aria-label="View bost source on GitHub">View source</a>
-          </div>
-        </article>
-      </div>
+        <div class="case-copy">
+          <p>bean sorts Downloads into the folders Windows already knows about. I register the directory watcher before scanning, so a file that arrives during startup can still trigger another pass.</p>
+          <p>When a move fails because the file is in use, bean queues it for a retry. If the destination name is taken, it tries a new name without overwriting the original.</p>
+          <a class="text-link" href="https://github.com/belutoni/bean">Read the bean source</a>
+        </div>
+      </article>
+
+      <article class="bost-case">
+        <div class="case-copy">
+          <p class="project-role"><code>bost</code> <span>C++23 / NASM / QEMU</span></p>
+          <h3>From boot sector to C++</h3>
+          <p>I wrote a small x86 operating system to follow what happens before a kernel starts. Its assembly bootloader sets up the GDT and enters 32-bit protected mode. The kernel uses C++23 concepts to check VGA text formatting at compile time.</p>
+          <a class="text-link" href="https://github.com/belutoni/bost">Read the bost source</a>
+        </div>
+        <figure class="boot">
+          <figcaption>bost’s boot sequence</figcaption>
+          <ol>
+            <li><span>16-bit real mode</span><strong>Load the next stage</strong></li>
+            <li><span>Mode switch</span><strong>Enable protected mode</strong></li>
+            <li><span>32-bit protected mode</span><strong>Enter the C++ kernel</strong></li>
+          </ol>
+        </figure>
+      </article>
     </section>
 
     <section class="section wrap contribution-section" aria-labelledby="open-source-title">
       <div>
-        <p class="eyebrow">Upstream</p>
-        <h2 id="open-source-title">Open source<span class="accent">.</span></h2>
+        <h2 id="open-source-title">Open source</h2>
       </div>
       <div class="contribution-list">
         <article class="contribution">
@@ -125,8 +147,7 @@
     <section id="lab" class="section wrap" aria-labelledby="lab-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Interactive demo</p>
-          <h2 id="lab-title">Cache lab<span class="accent">.</span></h2>
+          <h2 id="lab-title">Cache lab</h2>
         </div>
         <p class="section-intro">Walk the same C++ array in two orders. Watch which cache lines stay resident and see how access order changes the miss count.</p>
       </div>
@@ -177,8 +198,7 @@
 
     <section id="about" class="section wrap about" aria-labelledby="about-title">
       <div>
-        <p class="eyebrow">Background</p>
-        <h2 id="about-title">About me<span class="accent">.</span></h2>
+        <h2 id="about-title">About me</h2>
         <p>I study computer science at the University of Bucharest. I’m especially interested in how a program starts, how it uses memory, and how it waits for work. C++ is where I spend most of my time. I also use Rust and assembly when a project calls for them.</p>
       </div>
       <dl class="profile-details">
@@ -190,8 +210,7 @@
 
     <section id="contact" class="section wrap contact" aria-labelledby="contact-title">
       <div>
-        <p class="eyebrow"><span class="signal" aria-hidden="true"></span>Internship availability</p>
-        <h2 id="contact-title">Let’s talk<span class="accent">.</span></h2>
+        <h2 id="contact-title">Internships and contact</h2>
         <p>I’m available for a full-time internship for 13–17 weeks between May and September 2027.</p>
       </div>
       <a class="button button-primary" href="mailto:belutoni06@proton.me">belutoni06@proton.me</a>
@@ -200,7 +219,7 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <a class="wordmark" href="#top"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>belux0<span class="accent">.</span></a>
+      <a class="wordmark" href="#top"><span class="mark" aria-hidden="true">b.</span>belux0.dev</a>
       <span>Antonie-Gabriel Belu · Bucharest, Romania</span>
       <nav aria-label="Footer navigation"><a href="/blog/">Notes</a><a href="https://github.com/belutoni">GitHub</a></nav>
     </div>
