@@ -27,6 +27,10 @@ function address(line) {
   return `0x${(line * 16).toString(16).padStart(2, "0")}`;
 }
 
+function describeCounters() {
+  return `${hits} ${hits === 1 ? "hit" : "hits"} and ${misses} ${misses === 1 ? "miss" : "misses"}.`;
+}
+
 function render() {
   reads.firstChild.textContent = cursor;
   hitCount.textContent = hits;
@@ -95,7 +99,7 @@ function tick() {
   if (cursor === traversal.length) {
     window.clearInterval(timer);
     timer = null;
-    announcement.textContent = `Traversal complete. ${hits} hits and ${misses} misses.`;
+    announcement.textContent = `Traversal complete. ${describeCounters()}`;
   }
   render();
 }
@@ -104,7 +108,7 @@ run.addEventListener("click", () => {
   if (timer !== null || cursor === traversal.length) return;
   if (reducedMotion.matches) {
     while (cursor < traversal.length) readNext();
-    announcement.textContent = `Traversal complete. ${hits} hits and ${misses} misses.`;
+    announcement.textContent = `Traversal complete. ${describeCounters()}`;
     render();
     return;
   }
@@ -115,7 +119,7 @@ run.addEventListener("click", () => {
 step.addEventListener("click", () => {
   if (timer !== null || cursor === traversal.length) return;
   const result = readNext();
-  announcement.textContent = `${result}. ${hits} hits and ${misses} misses.`;
+  announcement.textContent = `${result}. ${describeCounters()}`;
   render();
 });
 
