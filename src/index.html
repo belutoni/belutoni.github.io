@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151513">
+  <meta name="description" content="Antonie-Gabriel Belu builds low-level software in C++23 and contributes to open source in C++ and Rust.">
+  <title>Antonie-Gabriel Belu · Systems Programming</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#index" aria-label="Antonie-Gabriel Belu, overview"><span class="brand-mark" aria-hidden="true">AB</span><span>belutoni<span class="accent">.</span></span></a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#projects">Projects</a>
+        <a href="#contributions">Open source</a>
+        <a href="#layout">Layout lab</a>
+        <a href="#background">Background</a>
+      </nav>
+      <a class="header-contact" href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section id="index" class="wrap hero" data-frame="0x00" data-label="Overview">
+      <div class="hero-copy">
+        <p class="eyebrow name"><span aria-hidden="true"></span>Antonie-Gabriel Belu</p>
+        <h1>Systems<br>programming<span class="accent">.</span></h1>
+        <p class="hero-intro">I write C++ close to the operating system, from a Win32 background daemon to a freestanding x86 kernel. I also contribute to open source in C++ and Rust.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projects">Explore projects</a>
+          <a class="button" href="https://github.com/belutoni">GitHub</a>
+        </div>
+      </div>
+      <nav class="frame-index" aria-label="Memory map">
+        <div class="instrument-bar">
+          <span class="instrument-title"><span class="status-led" aria-hidden="true"></span>Memory map</span>
+          <span class="instrument-meta">FRAME INDEX</span>
+        </div>
+        <div class="map-column-head" aria-hidden="true"><span>BASE</span><span>FRAME</span><span>SLOT</span></div>
+        <a href="#index" aria-current="location"><span class="address">0x00</span><span>Overview</span><span class="slot" aria-hidden="true"></span></a>
+        <a href="#projects"><span class="address">0x20</span><span>Projects</span><span class="slot" aria-hidden="true"></span></a>
+        <a href="#contributions"><span class="address">0x40</span><span>Open source</span><span class="slot" aria-hidden="true"></span></a>
+        <a href="#layout"><span class="address">0x60</span><span>Layout lab</span><span class="slot" aria-hidden="true"></span></a>
+        <a href="#background"><span class="address">0x80</span><span>Background</span><span class="slot" aria-hidden="true"></span></a>
+        <a href="#contact"><span class="address">0xA0</span><span>Contact</span><span class="slot" aria-hidden="true"></span></a>
+        <div class="map-readout" aria-hidden="true"><span>IP <strong data-address>0x00</strong></span><span>OFFSET <strong data-offset>+0x00</strong></span></div>
+      </nav>
+      <dl class="hero-spec">
+        <div><dt>PRIMARY</dt><dd>C++23</dd></div>
+        <div><dt>SECONDARY</dt><dd>Rust</dd></div>
+        <div><dt>SYSTEMS</dt><dd>Win32 · Linux · x86</dd></div>
+      </dl>
+    </section>
+
+    <section id="projects" class="wrap section" data-frame="0x20" data-label="Projects">
+      <header class="section-head">
+        <p class="eyebrow section-address"><span>0x20</span> Projects</p>
+        <h2>Selected projects</h2>
+      </header>
+
+      <article class="project">
+        <header>
+          <p class="project-meta"><span>July 2026 – Present</span><span>C++23 / Win32 API</span></p>
+          <h3>bean</h3>
+          <p class="project-type">Windows background file organizer</p>
+          <a class="text-link" href="https://github.com/belutoni/bean">View bean on GitHub</a>
+        </header>
+        <div class="project-body">
+          <p>A lightweight daemon that sorts Downloads into Windows known folders. Event-driven kernel waits and working-set trimming keep the daemon at 0% idle CPU and approximately 0.1 MB of RAM.</p>
+          <details>
+            <summary>Inspect implementation <span class="address">+0x00</span></summary>
+            <ul>
+              <li>Uses <code>MoveFileExW</code> to probe unique destination names atomically, avoiding check-then-move races and overwrites.</li>
+              <li>Retries locked downloads through a queue and owns Win32 handles with a move-only RAII wrapper.</li>
+              <li>Reads <code>extensions.cfg</code> with a hand-written parser so users can remap file types without rebuilding. Falls back to built-in defaults.</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+      <article class="project">
+        <header>
+          <p class="project-meta"><span>Nov. 2024 – Present</span><span>C++23 / NASM / QEMU</span></p>
+          <h3>bost</h3>
+          <p class="project-type">Minimal x86 operating system</p>
+          <a class="text-link" href="https://github.com/belutoni/bost">View bost on GitHub</a>
+        </header>
+        <div class="project-body">
+          <p>A freestanding x86 kernel and two-stage NASM bootloader, verified on real hardware and QEMU.</p>
+          <details>
+            <summary>Inspect implementation <span class="address">+0x10</span></summary>
+            <ul>
+              <li>Checks A20, loads from disk through BIOS, sets up the GDT, and switches to 32-bit protected mode.</li>
+              <li>Uses C++23 concepts to validate VGA text formatting at compile time. The driver supports scrolling, color, and hardware cursor control.</li>
+              <li>Implements 64-bit division helpers and stack-smashing protection that reports to a kernel panic screen.</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+    </section>
+
+    <section id="contributions" class="wrap section" data-frame="0x40" data-label="Open source">
+      <header class="section-head">
+        <p class="eyebrow section-address"><span>0x40</span> Contributions</p>
+        <h2>Open source</h2>
+      </header>
+      <article class="record">
+        <div><p class="record-meta">Apr. 2026 <span>·</span> C++</p><h3>LibreOffice</h3></div>
+        <p>Fixed a VBA compatibility bug in the LibreOffice Basic runtime and added StarBASIC regression tests.</p>
+        <a class="text-link" href="https://gerrit.libreoffice.org/c/core/+/203225">Gerrit change 203225</a>
+      </article>
+      <article class="record">
+        <div><p class="record-meta">Jan. 2026 <span>·</span> Rust</p><h3>egui</h3></div>
+        <p>Fixed multi-click events firing inside widgets when the press began outside their bounds. The patch landed after core-maintainer review.</p>
+        <a class="text-link" href="https://github.com/emilk/egui/pull/7817">Pull request #7817</a>
+      </article>
+    </section>
+
+    <section id="layout" class="wrap section" data-frame="0x60" data-label="Layout lab">
+      <header class="section-head lab-head">
+        <div>
+          <p class="eyebrow section-address"><span>0x60</span> Interactive</p>
+          <h2>Memory layout lab</h2>
+        </div>
+        <p>Reorder the fields in a sample struct and inspect the bytes. Compare C++ with Rust’s <code>repr(C)</code> under the same x86-64 ABI.</p>
+      </header>
+      <div class="lab" id="memory-lab">
+        <div class="instrument-bar">
+          <span class="instrument-title"><span class="status-led" aria-hidden="true"></span>Struct inspector</span>
+          <span class="instrument-meta">x86-64 SYSV</span>
+        </div>
+        <noscript><p class="noscript">Enable JavaScript to inspect individual bytes and change the field order.</p></noscript>
+        <div class="lab-controls" hidden>
+          <fieldset>
+            <legend>LANGUAGE</legend>
+            <div class="switch">
+              <label><input type="radio" name="language" value="cpp" checked><span>C++23</span></label>
+              <label><input type="radio" name="language" value="rust"><span>Rust</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>FIELD ORDER</legend>
+            <div class="switch">
+              <label><input type="radio" name="order" value="declared" checked><span>Declared</span></label>
+              <label><input type="radio" name="order" value="compact"><span>By alignment</span></label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="lab-body" hidden>
+          <div class="lab-code">
+            <p class="readout-heading">DECLARATION</p>
+            <pre><code id="declaration"></code></pre>
+            <p id="language-note" class="language-note"></p>
+          </div>
+          <div class="lab-bytes">
+            <div class="bytes-top"><p class="readout-heading" id="byte-label">BYTE MAP</p><p class="byte-instruction">Select a byte · Use arrow keys</p></div>
+            <div id="byte-map" class="byte-map" role="group" aria-labelledby="byte-label"></div>
+            <p class="byte-detail" id="byte-detail" role="status"></p>
+          </div>
+        </div>
+        <dl class="lab-stats" hidden>
+          <div><dt>STRUCT SIZE</dt><dd id="layout-size"></dd></div>
+          <div><dt>ALIGNMENT</dt><dd id="layout-alignment"></dd></div>
+          <div><dt>PADDING</dt><dd id="layout-padding"></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="background" class="wrap section" data-frame="0x80" data-label="Background">
+      <header class="section-head">
+        <p class="eyebrow section-address"><span>0x80</span> Education &amp; programs</p>
+        <h2>Background</h2>
+      </header>
+      <article class="background-record">
+        <p class="record-meta">2025 – Expected July 2028</p>
+        <div>
+          <h3>University of Bucharest</h3>
+          <p>B.Sc. in Computer Science, Olympiad Class · Faculty of Mathematics and Computer Science</p>
+          <p class="background-note">10/10 on the university admission exam and 10/10 in Informatics on the Baccalaureate.</p>
+        </div>
+      </article>
+      <article class="background-record">
+        <p class="record-meta">Summer 2026</p>
+        <div>
+          <h3>Politehnica University of Bucharest</h3>
+          <p>ARM Summer School</p>
+          <p class="background-note">Built an ARMv8 firmware package, a custom ARM64 Linux kernel, and a Buildroot root filesystem. Automated the build and boot sequence with GNU Make.</p>
+        </div>
+      </article>
+      <article class="background-record">
+        <p class="record-meta">Summer 2026</p>
+        <div>
+          <h3>NXP Semiconductors</h3>
+          <p>Embedded Linux Kernel Summer School</p>
+          <p class="background-note">Co-developed the first-place hackathon project and placed first in two of three Linux kernel assessments.</p>
+        </div>
+      </article>
+      <div class="background-extras">
+        <div>
+          <h3>Honors</h3>
+          <ul>
+            <li>National ICT Olympiad, C# Programming · National bronze and county second place, 2025</li>
+            <li>MateInfoUB, Informatics · Third place, 2025</li>
+            <li>Acadnet Applied Informatics Olympiad · County second place, 2025</li>
+            <li>Adolf Haimovici National Applied Mathematics Competition · County first place, 2024</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Tooling</h3>
+          <p>C++23, Rust, Python, Win32 API, Linux API, CMake, GNU Make, Git</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="wrap section footer" data-frame="0xA0" data-label="Contact">
+    <div>
+      <p class="eyebrow section-address"><span>0xA0</span> Contact</p>
+      <h2>Get in touch</h2>
+    </div>
+    <div class="footer-links">
+      <a class="text-link" href="mailto:belutoni06@proton.me">belutoni06@proton.me</a>
+      <a class="text-link" href="https://github.com/belutoni">github.com/belutoni</a>
+    </div>
+    <div class="footer-end"><span>Antonie-Gabriel Belu</span><a href="#index">Back to overview</a></div>
+  </footer>
+
+  <div class="frame-status" aria-hidden="true">
+    <div class="wrap"><span>IP <strong data-address>0x00</strong></span><span data-frame-name>Overview</span><div class="frame-track"><div data-progress></div></div><span class="status-offset">OFFSET <strong data-offset>+0x00</strong></span></div>
+  </div>
+</body>
+</html>
