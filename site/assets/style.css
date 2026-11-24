@@ -196,7 +196,7 @@ button:disabled, button[aria-disabled="true"] { opacity: .55; cursor: default; p
   gap: .8rem 1rem;
   padding: 1.1rem clamp(1.1rem, 2.6vw, 2.35rem);
 }
-.trace-interaction p, .trace-fallback { font-size: .9rem; line-height: 1.55; }
+.trace-interaction p, .trace-fallback { font-size: 1rem; line-height: 1.55; }
 .trace-interaction p { min-height: 2.8em; }
 .trace-actions { display: flex; align-items: center; gap: .3rem; }
 .trace-actions .button { min-width: 7.25rem; background: var(--cover); color: var(--frost); border-color: transparent; white-space: nowrap; }
